@@ -1,0 +1,13 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer components {
+  /* Tombol Utama Bergaya Brutalism */
+  .btn-brutal {
+    @apply inline-flex items-center justify-center bg-ocean text-foam font-display font-bold px-6 py-3 border-3 border-ink shadow-brutal transition-all duration-100 ease-in-out cursor-pointer;
+  }
+  .btn-brutal:active {
+    @apply shadow-brutal-hover translate-x-[2px] translate-y-[2px];
+  }
+}
