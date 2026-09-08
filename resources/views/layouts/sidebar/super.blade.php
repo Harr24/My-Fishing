@@ -28,7 +28,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 font-bold text-ink border-3 border-transparent hover:border-ink hover:shadow-brutal hover:bg-ocean hover:text-white transition-all">
+                <a href="{{ route('promo.index') }}" class="flex items-center gap-3 px-4 py-3 font-bold text-ink border-3 border-transparent hover:border-ink hover:shadow-brutal hover:bg-ocean hover:text-white transition-all">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6 shrink-0">
                         <path stroke-linecap="square" stroke-linejoin="miter" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z" />
                         <path stroke-linecap="square" stroke-linejoin="miter" d="M6 6h.008v.008H6V6z" />
@@ -36,6 +36,7 @@
                     Kelola Promo
                 </a>
             </li>
+
             <li>
                 <a href="#" class="flex items-center gap-3 px-4 py-3 font-bold text-ink border-3 border-transparent hover:border-ink hover:shadow-brutal hover:bg-ocean hover:text-white transition-all">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6 shrink-0">

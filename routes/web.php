@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // ROUTE SUPER ADMIN
-// Menggunakan middleware 'role:super' (hanya Super Admin yang bisa mengakses)
+// Menggunakan middleware 'role:super'
 Route::middleware(['auth', 'role:super'])->prefix('admin')->group(function () {
 
     // CRUD Kategori
@@ -44,6 +44,15 @@ Route::middleware(['auth', 'role:super'])->prefix('admin')->group(function () {
     Route::get('/produk/{product}/edit', [ProductController::class, 'edit'])->name('produk.edit');
     Route::put('/produk/{product}', [ProductController::class, 'update'])->name('produk.update');
     Route::delete('/produk/{product}', [ProductController::class, 'destroy'])->name('produk.destroy');
+
+    // CRUD Promo
+    Route::get('/promo', [App\Http\Controllers\PromoController::class, 'index'])->name('promo.index');
+    Route::get('/promo/create', [App\Http\Controllers\PromoController::class, 'create'])->name('promo.create');
+    Route::post('/promo', [App\Http\Controllers\PromoController::class, 'store'])->name('promo.store');
+
+    Route::get('/promo/{promo}/edit', [App\Http\Controllers\PromoController::class, 'edit'])->name('promo.edit');
+    Route::put('/promo/{promo}', [App\Http\Controllers\PromoController::class, 'update'])->name('promo.update');
+    Route::delete('/promo/{promo}', [App\Http\Controllers\PromoController::class, 'destroy'])->name('promo.destroy');
 
 });
 
