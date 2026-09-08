@@ -14,10 +14,9 @@ Route::get('/dashboard', function () {
     // Ambil nama role pertama dari user yang sedang login
     $role = auth()->user()->roles->first()->name ?? 'member';
 
-    // 1. KHUSUS UNTUK MEMBER (Ambil data produk dan kirim ke view member.dashboard)
+    // 1. KHUSUS UNTUK MEMBER (Hanya panggil view dashboard utama, tanpa bawa data produk)
     if ($role === 'member') {
-        $products = \App\Models\Product::with('promos')->where('is_active', true)->latest()->get();
-        return view('member.dashboard', compact('products'));
+        return view('member.dashboard');
     }
 
     // 2. UNTUK ROLE LAIN (Super Admin, dll)
@@ -30,11 +29,19 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // --- RUTE KATALOG (BARU & DETAIL) ---
+    Route::get('/katalog', [ProductController::class, 'katalog'])->name('katalog.index');
     Route::get('/katalog/{product}', [ProductController::class, 'show'])->name('katalog.show');
+
+    // --- RUTE KERANJANG ---
+    Route::post('/keranjang/{product}', [App\Http\Controllers\CartController::class, 'store'])->name('keranjang.store');
+    Route::get('/keranjang', [App\Http\Controllers\CartController::class, 'index'])->name('keranjang.index');
 });
 
 // ROUTE SUPER ADMIN

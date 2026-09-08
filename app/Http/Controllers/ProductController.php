@@ -112,4 +112,11 @@ class ProductController extends Controller
         // Tampilkan ke halaman detail khusus member
         return view('member.detail', compact('product'));
     }
+
+    public function katalog()
+    {
+        // Ambil produk untuk halaman katalog member
+        $products = \App\Models\Product::with(['category', 'promos'])->where('is_active', true)->latest()->get();
+        return view('member.katalog', compact('products'));
+    }
 }
