@@ -103,4 +103,13 @@ class ProductController extends Controller
 
         return redirect()->route('produk.index')->with('success', 'Produk berhasil dihapus dari sistem!');
     }
+
+    public function show(\App\Models\Product $product)
+    {
+        // Pastikan data kategori dan promo ikut dimuat (Eager Loading)
+        $product->load(['category', 'promos']);
+
+        // Tampilkan ke halaman detail khusus member
+        return view('member.detail', compact('product'));
+    }
 }
