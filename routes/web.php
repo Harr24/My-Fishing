@@ -29,7 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// --- ROUTE KHUSUS SUPER ADMIN ---
+// ROUTE SUPER ADMIN
 // Menggunakan middleware 'role:super' (hanya Super Admin yang bisa mengakses)
 Route::middleware(['auth', 'role:super'])->prefix('admin')->group(function () {
 
@@ -40,6 +40,10 @@ Route::middleware(['auth', 'role:super'])->prefix('admin')->group(function () {
     Route::get('/produk', [ProductController::class, 'index'])->name('produk.index');
     Route::get('/produk/create', [ProductController::class, 'create'])->name('produk.create');
     Route::post('/produk', [ProductController::class, 'store'])->name('produk.store');
+
+    Route::get('/produk/{product}/edit', [ProductController::class, 'edit'])->name('produk.edit');
+    Route::put('/produk/{product}', [ProductController::class, 'update'])->name('produk.update');
+    Route::delete('/produk/{product}', [ProductController::class, 'destroy'])->name('produk.destroy');
 
 });
 

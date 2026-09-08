@@ -58,4 +58,49 @@ class ProductController extends Controller
         // 5. Redirect ke halaman index dengan pesan sukses
         return redirect()->route('produk.index')->with('success', 'Produk baru berhasil ditambahkan ke katalog!');
     }
+    public function edit(Product $product)
+    {
+        $categories = \App\Models\Category::all();
+        return view('super.produk.edit', compact('product', 'categories'));
+    }
+
+    public function update(Request $request, Product $product)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            // Pengecualian SKU: Boleh pakai SKU yang sama ASALKAN milik ID produk ini sendiri
+            'sku' => 'required|string|unique:products,sku,' . $product->id,
+            'price' => 'required|numeric|min:0',
+            'category_id' => 'required|exists:categories,id',
+            'stock_alert_threshold' => 'required|integer|min:1',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+        ]);
+
+        if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
+            if ($product->image) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($product->image);
+            }
+            $validated['image'] = $request->file('image')->store('products', 'public');
+        }
+
+        $validated['is_active'] = $request->has('is_active');
+
+        $product->update($validated);
+
+        return redirect()->route('produk.index')->with('success', 'Data produk berhasil diperbarui!');
+    }
+
+    public function destroy(Product $product)
+    {
+        // Hapus gambar fisik dari folder sebelum datanya dihapus dari database
+        if ($product->image) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($product->image);
+        }
+
+        $product->delete();
+
+        return redirect()->route('produk.index')->with('success', 'Produk berhasil dihapus dari sistem!');
+    }
 }

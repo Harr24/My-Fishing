@@ -1,7 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
+        Manajemen Produk
+    </x-slot>
 
-        <!-- Alert Pesan Sukses -->
+    <!-- Alert Pesan Sukses (Diletakkan di luar slot header agar layout tetap rapi) -->
     @if(session('success'))
         <div class="mb-6 bg-seaweed text-white border-3 border-ink shadow-brutal p-4 flex items-center justify-between">
             <div class="flex items-center gap-2 font-bold">
@@ -30,8 +32,6 @@
             </ul>
         </div>
     @endif
-        Manajemen Produk
-    </x-slot>
 
     <!-- Top Action Bar -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
@@ -71,14 +71,11 @@
                             {{ $product->category->name ?? 'Tanpa Kategori' }}
                         </td>
 
-                        <!-- Logika Harga Promo Sesuai Brief -->
+                        <!-- Logika Harga Promo -->
                         <td class="p-4 border-r-3 border-ink">
                             @if($product->active_promo)
-                                <!-- Jika ada promo, harga normal dicoret, harga diskon ditonjolkan warna coral -->
                                 <div class="text-sm line-through text-ink/60 mb-1">Rp {{ number_format($product->price, 0, ',', '.') }}</div>
                                 <div class="font-black text-coral text-xl mb-2">Rp {{ number_format($product->final_price, 0, ',', '.') }}</div>
-
-                                <!-- Badge tag harga miring -->
                                 <div class="inline-block bg-sun border-2 border-ink px-2 py-0.5 text-xs font-bold transform -rotate-3 shadow-brutal-hover">
                                     Diskon Aktif!
                                 </div>
@@ -87,20 +84,23 @@
                             @endif
                         </td>
 
-                        <!-- Tombol Aksi -->
+                        <!-- Tombol Aksi (Sudah Terkoneksi Route!) -->
                         <td class="p-4 text-center">
                             <div class="flex justify-center gap-2">
-                                <a href="#" class="bg-sun border-2 border-ink px-4 py-2 font-bold text-sm shadow-brutal-hover hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
+                                <a href="{{ route('produk.edit', $product->id) }}" class="bg-sun border-2 border-ink px-4 py-2 font-bold text-sm shadow-brutal-hover hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
                                     Edit
                                 </a>
-                                <button class="bg-coral text-white border-2 border-ink px-4 py-2 font-bold text-sm shadow-brutal-hover hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
-                                    Hapus
-                                </button>
+                                <form action="{{ route('produk.destroy', $product->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus produk ini secara permanen?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="bg-coral text-white border-2 border-ink px-4 py-2 font-bold text-sm shadow-brutal-hover hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
+                                        Hapus
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>
                 @empty
-                    <!-- Jika tabel kosong -->
                     <tr>
                         <td colspan="5" class="p-12 text-center">
                             <div class="font-display font-bold text-ink text-2xl mb-2">Belum ada produk.</div>
