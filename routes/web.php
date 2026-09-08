@@ -44,6 +44,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/keranjang', [App\Http\Controllers\CartController::class, 'index'])->name('keranjang.index');
     Route::patch('/keranjang/{cart}', [App\Http\Controllers\CartController::class, 'update'])->name('keranjang.update');
     Route::delete('/keranjang/{cart}', [App\Http\Controllers\CartController::class, 'destroy'])->name('keranjang.destroy');
+    // --- RUTE CHECKOUT & PESANAN ---
+    Route::post('/checkout', [App\Http\Controllers\OrderController::class, 'checkout'])->name('checkout.process');
+    Route::get('/pesanan', [App\Http\Controllers\OrderController::class, 'index'])->name('pesanan.index');
+    Route::get('/pesanan/{order}', [App\Http\Controllers\OrderController::class, 'show'])->name('pesanan.show');
+    Route::patch('/pesanan/{order}/batal', [App\Http\Controllers\OrderController::class, 'cancel'])->name('pesanan.cancel'); // Batalkan pesanan
 });
 
 // ROUTE SUPER ADMIN

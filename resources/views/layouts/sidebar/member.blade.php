@@ -22,6 +22,11 @@
                     🛒 Keranjang Belanja
                 </a>
             </li>
+            <li>
+                <a href="{{ route('pesanan.index') }}" class="flex items-center gap-3 px-4 py-3 font-bold text-ink border-3 {{ request()->routeIs('pesanan.*') ? 'border-ink bg-ocean text-white shadow-brutal' : 'border-transparent hover:border-ink hover:shadow-brutal hover:bg-ocean hover:text-white' }} transition-all">
+                    🧾 Riwayat Pesanan
+                </a>
+            </li>
         </ul>
     </nav>
 
