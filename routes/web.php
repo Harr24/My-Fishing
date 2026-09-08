@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
     // --- RUTE KERANJANG ---
     Route::post('/keranjang/{product}', [App\Http\Controllers\CartController::class, 'store'])->name('keranjang.store');
     Route::get('/keranjang', [App\Http\Controllers\CartController::class, 'index'])->name('keranjang.index');
+    Route::patch('/keranjang/{cart}', [App\Http\Controllers\CartController::class, 'update'])->name('keranjang.update');
+    Route::delete('/keranjang/{cart}', [App\Http\Controllers\CartController::class, 'destroy'])->name('keranjang.destroy');
 });
 
 // ROUTE SUPER ADMIN

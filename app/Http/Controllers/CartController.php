@@ -45,4 +45,31 @@ class CartController extends Controller
 
         return view('member.cart', compact('cartItems', 'totalPrice'));
     }
+    // Fungsi untuk menambah/mengurangi kuantitas
+    public function update(Request $request, Cart $cart)
+    {
+        // Pastikan keranjang ini benar milik user yang login
+        if ($cart->user_id === Auth::id()) {
+            if ($request->action === 'increase') {
+                $cart->increment('quantity');
+            } elseif ($request->action === 'decrease') {
+                // Jika jumlahnya lebih dari 1, kurangi. Jika 1, jangan lakukan apa-apa (harus pakai tombol hapus)
+                if ($cart->quantity > 1) {
+                    $cart->decrement('quantity');
+                }
+            }
+        }
+
+        return back(); // Kembali ke halaman keranjang
+    }
+
+    // Fungsi untuk menghapus barang dari keranjang
+    public function destroy(Cart $cart)
+    {
+        if ($cart->user_id === Auth::id()) {
+            $cart->delete();
+        }
+
+        return back()->with('success', 'Barang berhasil dibuang dari keranjang.');
+    }
 }
